@@ -43,9 +43,9 @@ npm run dev
 
 ## Screenshots
 
-![Dashboard Overview](./public/screenshots/screenshot1.png)
-![Map View](./public/screenshots/screenshot2.png)
-![Alerts and Water Report](./public/screenshots/screenshot3.png)
+![Dashboard Overview](./public/screenshots/localpulse1.png)
+![Map View](./public/screenshots/localpulse2.png)
+![Alerts and Water Report](./public/screenshots/localpulse3.png)
 
 ## Why this exists
 

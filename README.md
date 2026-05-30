@@ -41,7 +41,11 @@ npm run dev
 
 ## Screenshots
 
-![LocalPulse Dashboard](https://localpulse2.vercel.app)
+## Screenshots
+
+![Dashboard Overview](./public/screenshots/screenshot1.png)
+![Map View](./public/screenshots/screenshot2.png)
+![Alerts and Water Report](./public/screenshots/screenshot3.png)
 
 ## Why this exists
 

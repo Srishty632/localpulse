@@ -14,7 +14,7 @@ export async function GET() {
       },
     });
 
-    const data = stations.map((station) => {
+    const data = stations.map((station: any) => {
       const latest = station.readings[0];
       return {
         id: station.id,

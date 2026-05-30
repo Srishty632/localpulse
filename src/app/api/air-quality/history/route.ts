@@ -3,18 +3,19 @@ import { prisma } from "@/lib/prisma";
 
 export async function GET() {
   try {
-    // Get readings from last 24 hours grouped by hour
     const readings = await prisma.airQualityReading.findMany({
       where: {
         recordedAt: {
           gte: new Date(Date.now() - 24 * 60 * 60 * 1000),
         },
       },
-      include: { station: true },
+      select: {
+        aqi: true,
+        recordedAt: true,
+      },
       orderBy: { recordedAt: "asc" },
     });
 
-    // Group by hour and calculate avg AQI
     const hourMap = new Map<string, number[]>();
 
     for (const reading of readings) {
@@ -34,18 +35,7 @@ export async function GET() {
       aqi: Math.round(aqis.reduce((a, b) => a + b, 0) / aqis.length),
     }));
 
-    // Also return per-station latest
-    const stationData = await prisma.station.findMany({
-      where: { isActive: true },
-      include: {
-        readings: {
-          orderBy: { recordedAt: "desc" },
-          take: 10,
-        },
-      },
-    });
-
-    return NextResponse.json({ success: true, chartData, stationData });
+    return NextResponse.json({ success: true, chartData });
   } catch (error: any) {
     return NextResponse.json(
       { success: false, error: error.message },

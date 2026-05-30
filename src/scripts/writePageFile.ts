@@ -1,4 +1,6 @@
-"use client";
+import fs from "fs";
+
+const content = `"use client";
 
 import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
@@ -203,7 +205,7 @@ export default function Home() {
                   </div>
                   <div className="flex items-center justify-between">
                     <p className="text-gray-400 text-xs">PM2.5: {station.pm25 ?? "--"} · PM10: {station.pm10 ?? "--"}</p>
-                    <span className={`text-xs px-2 py-0.5 rounded-full text-white ${getAQIColor(station.aqiLevel)}`}>
+                    <span className={\`text-xs px-2 py-0.5 rounded-full text-white \${getAQIColor(station.aqiLevel)}\`}>
                       {getAQILabel(station.aqiLevel)}
                     </span>
                   </div>
@@ -265,7 +267,7 @@ export default function Home() {
             className="mt-4 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white px-6 py-2 rounded-lg text-sm font-medium transition-colors">
             {submitting ? "Subscribing..." : "Subscribe to Alerts"}
           </button>
-          {submitMsg && <p className={`mt-3 text-sm ${submitMsg.startsWith("✓") ? "text-green-400" : "text-red-400"}`}>{submitMsg}</p>}
+          {submitMsg && <p className={\`mt-3 text-sm \${submitMsg.startsWith("✓") ? "text-green-400" : "text-red-400"}\`}>{submitMsg}</p>}
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -300,7 +302,7 @@ export default function Home() {
                 className="w-full bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                 {waterSubmitting ? "Submitting..." : "Submit Report"}
               </button>
-              {waterMsg && <p className={`text-sm ${waterMsg.startsWith("✓") ? "text-green-400" : "text-red-400"}`}>{waterMsg}</p>}
+              {waterMsg && <p className={\`text-sm \${waterMsg.startsWith("✓") ? "text-green-400" : "text-red-400"}\`}>{waterMsg}</p>}
             </div>
           </div>
 
@@ -329,4 +331,8 @@ export default function Home() {
       </div>
     </main>
   );
-}
+}`;
+
+fs.writeFileSync("src/app/page.tsx", content, "utf8");
+console.log("✓ page.tsx written successfully!");
+console.log("File size:", content.length, "chars");

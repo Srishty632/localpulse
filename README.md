@@ -1,36 +1,52 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# LocalPulse 🌆
 
-## Getting Started
+A real-time civic dashboard for Patna, Bihar — aggregating air quality, power outage, and water supply data from government sources into one clean, accessible interface.
 
-First, run the development server:
+**Live at: https://localpulse2.vercel.app**
+
+## What it does
+
+- **Air Quality Map** — Live AQI readings from 6 CPCB monitoring stations across Patna, colour-coded by severity (Good → Hazardous)
+- **Power Outage Tracker** — Scrapes SBPDCL's scheduled outage page every 6 hours and displays active cuts
+- **AQI Trend Chart** — 24-hour historical AQI trend per station
+- **Alert Subscriptions** — Email alerts when AQI crosses your threshold or a power cut is scheduled in your ward
+- **Water Issue Reporting** — Crowdsourced water supply issue reporting since no government API exists for this
+
+## Tech Stack
+
+- **Frontend** — Next.js 15, TypeScript, Tailwind CSS, Leaflet.js, Recharts
+- **Backend** — Next.js API routes, Prisma ORM, PostgreSQL (Supabase)
+- **Data Sources** — CPCB API (data.gov.in), SBPDCL website scraper, IMD weather alerts
+- **Deployment** — Vercel
+
+## Data Sources
+
+| Data | Source | Method |
+|------|--------|--------|
+| Air Quality (AQI, PM2.5, PM10) | CPCB via data.gov.in | REST API |
+| Power Outages | SBPDCL | Web scraper (Cheerio) |
+| Weather Alerts | IMD | REST API |
+| Water Issues | Community | Crowdsourced |
+
+## Local Setup
 
 ```bash
+git clone https://github.com/Srishty632/localpulse.git
+cd localpulse
+npm install
+# Add your .env file with DATABASE_URL and CPCB_API_KEY
+npx prisma generate
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Screenshots
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+![LocalPulse Dashboard](https://localpulse2.vercel.app)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Why this exists
 
-## Learn More
+Patna residents have no single place to check air quality, power cut schedules, or water supply status. This project aggregates that data from 5+ government sources and makes it accessible in one dashboard.
 
-To learn more about Next.js, take a look at the following resources:
+---
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Built with ❤️ for Patna by Srishty Vidyarthi

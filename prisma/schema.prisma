@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Station {
+  id          String   @id @default(cuid())
+  name        String
+  city        String   @default("Patna")
+  latitude    Float
+  longitude   Float
+  stationCode String   @unique
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  readings    AirQualityReading[]
+}
+
+model AirQualityReading {
+  id         String   @id @default(cuid())
+  stationId  String
+  station    Station  @relation(fields: [stationId], references: [id])
+  pm25       Float?
+  pm10       Float?
+  no2        Float?
+  so2        Float?
+  co         Float?
+  aqi        Int?
+  recordedAt DateTime
+  createdAt  DateTime @default(now())
+  @@index([stationId, recordedAt])
+}
+
+model PowerOutage {
+  id          String   @id @default(cuid())
+  area        String
+  ward        String?
+  feeder      String?
+  startTime   DateTime
+  endTime     DateTime
+  reason      String?
+  isScheduled Boolean  @default(true)
+  isActive    Boolean  @default(true)
+  sourceUrl   String?
+  createdAt   DateTime @default(now())
+  @@index([startTime, area])
+}
+
+model WaterReport {
+  id          String   @id @default(cuid())
+  area        String
+  ward        String?
+  issueType   String
+  description String?
+  latitude    Float?
+  longitude   Float?
+  isVerified  Boolean  @default(false)
+  reportedAt  DateTime @default(now())
+}
+
+model AlertSubscription {
+  id           String   @id @default(cuid())
+  email        String
+  ward         String
+  alertOnAqi   Boolean  @default(true)
+  aqiThreshold Int      @default(150)
+  alertOnPower Boolean  @default(true)
+  alertOnWater Boolean  @default(false)
+  isActive     Boolean  @default(true)
+  createdAt    DateTime @default(now())
+  @@unique([email, ward])
+  @@index([ward])
+}
+
+model ScraperLog {
+  id      String   @id @default(cuid())
+  source  String
+  status  String
+  message String?
+  runAt   DateTime @default(now())
+}
